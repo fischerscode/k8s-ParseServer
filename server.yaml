@@ -39,8 +39,8 @@ spec:
           mountPath: /parse-server/cloud
       volumes:
       - name: parse-cloudcode
-        persistentVolumeClaim:
-          claimName: parse-cloudcode
+        configMap:
+          name: parse-cloudcode
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
