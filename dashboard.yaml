@@ -39,7 +39,7 @@ spec:
         args: [/etc/config/dashboard.json]
 #        command: ["sleep", "100000000000"]
         volumeMounts:
-        - name: parse-dowhow-dashboard-config
+        - name: parse-dashboard-config
           mountPath: "/etc/config"
           readOnly: true
       volumes:
