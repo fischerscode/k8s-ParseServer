@@ -14,7 +14,7 @@ Setup:
    db.createUser({
      user: "parse",
      pwd: "MONGODB_PASSWORD_FROM_SERVER.ENV",
-     roles: [{role: "dbAdmin", db: "ParseDB"}],[{role: "readWrite", db: "ParseDB"}]})
+     roles: [ { role: "dbAdmin", db: "ParseDB" }],[ { role: "readWrite", db: "ParseDB" }]})
      
    exit
    exit
