@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo
+  labels:
+    name: mongo
+    app: mongo
+    tier: backend
+    role: master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: mongo
+      app: mongo
+      tier: backend
+      role: master
+  template:
+    metadata:
+      labels:
+        name: mongo
+        app: mongo
+        tier: backend
+        role: master
+    spec:
+      containers:
+      - name: mongo
+        image: mongo:3.2
+        command: ["mongod"]
+        ports:
+        - name: mongo
+          containerPort: 27017
+        env:
+        - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+          value: "root"
+        - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+          value: "TOP_SECRET"
+        volumeMounts:
+        - name: mongodb-dowhow-playgro
+          mountPath: /data/db
+      volumes:
+      - name: parse-mongodb
+        persistentVolumeClaim:
+          claimName: parse-mongodb
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: parse-mongodb
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+  labels:
+    app: mongo
+    tier: backend
+    role: master
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  selector:
+    name: mongo
+    app: mongo
+    tier: backend
+    role: master

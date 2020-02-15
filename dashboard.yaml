@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parse-dashboard
+  labels:
+    name: parse-dashboard
+    app: parse-dashboard
+    tier: frontend
+    role: application-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: parse-dashboard
+      app: parse-dashboard
+      tier: frontend
+      role: application-server
+  template:
+    metadata:
+      labels:
+        name: parse-dashboard
+        app: parse-dashboard
+        tier: frontend
+        role: application-server
+    spec:
+      containers:
+      - image: parseplatform/parse-dashboard:2.0.3
+#:latest
+        name: parse-dashboard
+        ports:
+        - containerPort: 4040
+        readinessProbe:
+          httpGet:
+            path: /apps
+            port: 4040
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+        command: ["npm","start",--,--allowInsecureHTTP,"true",--config]
+        args: [/etc/config/dashboard.json]
+#        command: ["sleep", "100000000000"]
+        volumeMounts:
+        - name: parse-dowhow-dashboard-config
+          mountPath: "/etc/config"
+          readOnly: true
+      volumes:
+      - name: parse-dashboard-config
+        configMap:
+          name: parse-dashboard-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: parse-dashboard
+  labels:
+    app: parse-dashboard
+    name: parse-dashboard
+    tier: frontend
+    role: application-server
+spec:
+  ports:
+  - port: 80
+    targetPort: 4040
+    protocol: TCP
+    name: parse-dashboard
+  type: LoadBalancer
+  selector:
+    name: parse-dashboard
+    app: parse-dashboard
+    tier: frontend
+    role: application-server

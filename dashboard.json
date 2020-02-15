@@ -1,0 +1,21 @@
+{
+"apps": [
+	{
+        "serverURL": "https://SERVER_URL/OptionalSubPathForReverseProxy/",
+	"appId": "Test_APP",
+	"masterKey": "TOP_SECRET",
+	"restKey" : "TOP_SECRET",
+	"appName": "TEST_APP",
+	"iconName": "",
+	"javascriptKey": "TOP_SECRET"
+	}
+
+],
+"users": [
+ {
+ "user":"admin",
+ "pass":"TOP_SECRET",
+ "apps": [{"appId": "Test_APP"}]
+ } ],
+"iconsFolder": "icons"
+}

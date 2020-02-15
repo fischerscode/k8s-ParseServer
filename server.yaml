@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parse-server
+  labels:
+    name: parse-server
+    tier: backend
+    role: application-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: parse-server
+      tier: backend
+      role: application-server
+  template:
+    metadata:
+      labels:
+        name: parse-server
+        tier: backend
+        role: application-server
+    spec:
+      containers:
+      - image: maaeps/parse-server:v1
+        name: parse-server
+        envFrom:
+        - configMapRef:
+           name: parse-config
+        ports:
+        - containerPort: 1337 
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 1337
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+        volumeMounts:
+        - name: parse-cloudcode
+          mountPath: /parse-server/cloud
+      volumes:
+      - name: parse-cloudcode
+        persistentVolumeClaim:
+          claimName: parse-cloudcode
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: parse-cloudcode
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: parse-server
+  labels:
+    name: parse-server
+    tier: backend
+    role: application-server
+spec:  
+  ports:
+  - port: 80
+    targetPort: 1337 
+    protocol: TCP
+    name: parse-app-service
+  type: LoadBalancer 
+  selector:
+    name: parse-server
+    tier: backend
+    role: application-server
