@@ -24,3 +24,4 @@ Setup:
 8. ```chmod +x generatecm.sh```
 9. ```./generatecm.sh```
 10. ```kubectl apply -f server.yaml -f dashboard.yaml```
+11. Configure your reverse proxy or change the services to use an external ip.
