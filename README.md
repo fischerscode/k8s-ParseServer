@@ -1,5 +1,3 @@
-TODO:: UPDATE SERVER
-
 Setup:
 1. Create ns `kubectl create ns NAMESPACENAME`
 2. Use NS `kubens NAMESPACENAME`

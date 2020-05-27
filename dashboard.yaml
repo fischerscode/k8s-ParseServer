@@ -24,7 +24,7 @@ spec:
         role: application-server
     spec:
       containers:
-      - image: parseplatform/parse-dashboard:2.0.3
+      - image: parseplatform/parse-dashboard:2.0.5
 #:latest
         name: parse-dashboard
         ports:
