@@ -21,7 +21,7 @@ spec:
         role: application-server
     spec:
       containers:
-      - image: parseplatform/parse-server:4.2.0
+      - image: parseplatform/parse-server:4.3.0
         name: parse-server
         envFrom:
         - configMapRef:
