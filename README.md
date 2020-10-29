@@ -10,7 +10,7 @@ Setup:
 5. ```kubectl exec -ti MONGODB_POD_NAME -- /bin/bash```
 6. ```mongo```
 7. ```use ParseDB
-   
+   use ParseDB
    db.createUser({
      user: "parse",
      pwd: "MONGODB_PASSWORD_FROM_SERVER.ENV",
